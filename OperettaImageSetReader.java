@@ -502,9 +502,6 @@ public class OperettaImageSetReader extends FormatReader {
             }
         }
         
-        //System.out.println("CoreMetadata populated.");
-        //System.out.println("Username: " + username);
-        
         // populate the MetadataStore
         MetadataStore store = makeFilterMetadata();
         MetadataTools.populatePixels(store, this, true);
@@ -551,9 +548,7 @@ public class OperettaImageSetReader extends FormatReader {
                     String imageID  = MetadataTools.createLSID("Image", imageIndex);
                     String wellSampleID = MetadataTools.createLSID("WellSample", 0, well, field);
                     String name = "Well " + (well + 1) + ", Field " + (field + 1);
-                    
-                    //System.out.println("Importing image: " + name);
-                    
+                                        
                     store.setWellSampleID(wellSampleID, 0, well, field);
                     store.setWellSampleIndex(new NonNegativeInteger(imageIndex), 0, well, field);
                     store.setWellSampleImageRef(imageID, 0, well, field);
@@ -566,7 +561,6 @@ public class OperettaImageSetReader extends FormatReader {
                     for (int c = 0; c < getSizeC(); c++) {
                         ExposureRecordEntry exposure = exposures.get(allImages[imageIndex][c].record - 1);
                         
-                        //System.out.println("Channel " + c + ": " + exposure.channelName);
                         store.setChannelName(exposure.channelName, imageIndex, c);
                         
                         Integer excitationWavelength = null;
@@ -575,7 +569,6 @@ public class OperettaImageSetReader extends FormatReader {
                                 for (LightSourceOutputInfo lightSourceOutput: lightSource.outputs) {
                                     if (lightSourceOutput.ID.equals(exposure.lightSourceOutputName)) {
                                         if (lightSourceOutput.wavelength > 0) {
-                                            //System.out.println("Set excitation Wavelength: " + lightSourceOutput.wavelength);
                                             store.setChannelExcitationWavelength(new Length(lightSourceOutput.wavelength, UNITS.NM), imageIndex, c);
                                         }
                                     }
@@ -589,14 +582,12 @@ public class OperettaImageSetReader extends FormatReader {
                                 for (FilterInfo filter: filterChanger.filters) {
                                     if (filter.ID.equals(exposure.emissionFilterName)) {
                                         if (filter.wavelength > 0) {
-                                            //System.out.println("Set emission Wavelength: " + filter.wavelength);
                                             store.setChannelEmissionWavelength(new Length(filter.wavelength, UNITS.NM), imageIndex, c);
                                         }
                                     }
                                 }
                             }
                         }
-                        //System.out.println("\n");
                     }
                     
                     Double avgTemp = 0.0;
