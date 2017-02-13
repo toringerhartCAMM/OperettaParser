@@ -859,7 +859,7 @@ public class OperettaImageSetReader extends FormatReader {
                 sublayoutInfo = new SublayoutInfo();
                 sublayoutSection = true;
             } 
-            else if (qName.equals("Stack") && attributes.getValue("id") == null && stackPlanesSection == false) 
+            else if (qName.equals("Plane") && attributes.getValue("id") == null && stackPlanesSection == false) 
             {
                 planeEntry = new StackPlaneEntry();
                 stackPlanesSection = true;
@@ -921,7 +921,7 @@ public class OperettaImageSetReader extends FormatReader {
                 wellEntry = new WellEntry();
             } 
         }
-
+        
         @Override
         public void endElement(String uri, String localName, String qName) 
         {
@@ -1172,9 +1172,16 @@ public class OperettaImageSetReader extends FormatReader {
                     lightSourceOutputInfo.wavelength = Integer.parseInt(value);
                 } 
             }
+            else if (stackPlanesSection != false) {
+                if ("Z".equals(currentName)) {
+                    planeEntry.z = Double.parseDouble(value);
+                } else if ("ExposureID".equals(currentName)) {
+                    planeEntry.exposureId = Integer.parseInt(value);
+                }
+            }
             
             currentName = null;
-
+            
             if (qName.equals("Field") && sublayoutInfo != null && sublayoutSection == true) {
                 sublayoutInfo.fieldEntries.add(fieldEntry);
                 fieldEntry = null;
@@ -1183,7 +1190,7 @@ public class OperettaImageSetReader extends FormatReader {
                 wells.add(wellEntry);
                 wellEntry = null;
             }
-            else if (qName.equals("Stack") && planeEntry != null) {
+            else if (qName.equals("Plane") && planeEntry != null) {
                 planes.add(planeEntry);
                 planeEntry = null;
             }
