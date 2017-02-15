@@ -450,6 +450,9 @@ public class OperettaImageSetReader extends FormatReader {
                 RandomAccessInputStream s;
                 Location f;
                 
+                if (orderedFiles[i][j] == null) {
+                    throw new FileNotFoundException("File=" + orderedFiles[i][j] + ", Bad index: i=" + i + ", j=" + j + "\n");
+                }
                 f = new Location(orderedFiles[i][j]);
 
                 try {
