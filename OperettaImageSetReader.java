@@ -1177,6 +1177,10 @@ public class OperettaImageSetReader extends FormatReader {
             }
             else if (stackPlanesSection != false) {
                 if ("Z".equals(currentName)) {
+                    System.out.println("[DEBUG]");
+                    System.out.println("value=" + value);
+                    System.out.println("plateEntry=" + plateEntry);
+                    System.out.println("[DEBUG]");
                     planeEntry.z = Double.parseDouble(value);
                 } else if ("ExposureID".equals(currentName)) {
                     planeEntry.exposureId = Integer.parseInt(value);
