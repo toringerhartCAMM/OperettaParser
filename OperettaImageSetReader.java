@@ -1200,6 +1200,7 @@ public class OperettaImageSetReader extends FormatReader {
             else if (qName.equals("Plane") && planeEntry != null) {
                 planes.add(planeEntry);
                 planeEntry = null;
+                stackPlanesSection = false;
             }
             else if (qName.equals("Repetition") && repetition != null) {
                 slowKineticInfo.timepoints.add(repetition);
